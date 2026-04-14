@@ -3,7 +3,10 @@ import pandas as pd
 import numpy as np
 if 'clicked' not in st.session_state:
     st.session_state['clicked'] = False
-
+st.set_page_config(
+    layout="centered",          # "centered" is better for mobile than "wide"
+    initial_sidebar_state="collapsed" # Hides sidebar, mimicking app behavior
+)
 b1 = st.button("About us")
 if b1:
     st.session_state['clicked'] = True
