@@ -28,35 +28,60 @@ for i, symbol in enumerate(symbols):
             clicked = symbol
 
 # 5. Logic for EVERY Button (If/Else)
-if clicked:
-    if clicked == "=":
-        # --- Manual Calculation Logic (No Eval) ---
-        try:
-            # Handling standard math (+, -, *, /)
-            if "+" in eq:
-                parts = [float(x) for x in eq.split("+")]
-                st.write(f"Result: {sum(parts)}")
-            elif "-" in eq:
-                parts = [float(x) for x in eq.split("-")]
-                res = parts[0] - sum(parts[1:])
-                st.write(f"Result: {res}")
-            elif "*" in eq:
-                parts = [float(x) for x in eq.split("*")]
-                res = 1
-                for x in parts: res *= x
-                st.write(f"Result: {res}")
-            elif ">" in eq:
-                parts = eq.split(">")
-                st.write("Right" if float(parts[0]) > float(parts[1]) else "Wrong")
-            elif "<" in eq:
-                parts = eq.split("<")
-                st.write("Right" if float(parts[0]) < float(parts[1]) else "Wrong")
-            # Add more elif blocks here for //, %, etc.
-        except:
-            st.error("Check your numbers")
+if clicked == "=":
+    try:
+        # 1. Check double-character operators FIRST
+        if "**" in eq:
+            parts = [float(x) for x in eq.split("**")]
+            res = parts[0]
+            for x in parts[1:]: res **= x
+            st.write(f"Result: {res}")
+
+        elif "//" in eq:
+            parts = [float(x) for x in eq.split("//")]
+            res = parts[0]
+            for x in parts[1:]: res //= x
+            st.write(f"Result: {res}")
+
+        # 2. Check single-character operators
+        elif "+" in eq:
+            parts = [float(x) for x in eq.split("+")]
+            st.write(f"Result: {sum(parts)}")
+
+        elif "-" in eq:
+            parts = [float(x) for x in eq.split("-")]
+            res = parts[0] - sum(parts[1:])
+            st.write(f"Result: {res}")
+
+        elif "*" in eq:
+            parts = [float(x) for x in eq.split("*")]
+            res = 1
+            for x in parts: res *= x
+            st.write(f"Result: {res}")
+
+        elif "/" in eq:
+            parts = [float(x) for x in eq.split("/")]
+            res = parts[0]
+            for x in parts[1:]: res /= x
+            st.write(f"Result: {res}")
+        elif "%" in eq:
+            parts = [float(x) for x in eq.split("%")]
+            res = parts[0]
+            for x in parts[1:]: res %= x
+            st.write(f"Result: {res}")
+        elif ">" in eq:
+            parts = eq.split(">")
+            st.write("Right" if float(parts[0]) > float(parts[1]) else "Wrong")
+
+        elif "<" in eq:
+            parts = eq.split("<")
+            st.write("Right" if float(parts[0]) < float(parts[1]) else "Wrong")
+
+    except Exception as e:
+        st.error("Check your numbers")
 
     # --- Button "Clicked" Logic for every operation ---
-    elif clicked == "+":
+    if clicked == "+":
         st.session_state['calc_input'] = eq + "+"
         st.rerun()
     elif clicked == "-":
